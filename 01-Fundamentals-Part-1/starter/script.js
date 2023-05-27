@@ -147,3 +147,86 @@ console.log(Number(`Mark`));
 
 console.log(String(23), 23);
 console.log(`i'm` + 23 + ` Years old`);
+
+// five falsey valus 0,'',undefined, NaN, null
+// prompt captures a string
+let FavoriteNumber = prompt(`What's your favorite Number`);
+
+let dScores = [96, 108, 89];
+let kScores = [88, 91, 110];
+let dTotal = 0;
+let kTotal = 0;
+let dAvg;
+let kAvg;
+
+dScores.forEach((num) => {
+  dTotal += num;
+});
+
+dAvg = dTotal / dScores.length;
+
+kScores.forEach((num) => {
+  kTotal += num;
+});
+
+kAvg = kTotal / kScores.length;
+console.log(`${dAvg} - ${kAvg}`);
+if (dTotal > kTotal) {
+  console.log(`Dolphins Win`);
+} else if (kTotal > dTotal) {
+  console.log(`Koalas Win`);
+} else {
+  console.log(`it's a tie`);
+}
+
+dScores = [97, 112, 101];
+kScores = [88, 91, 110];
+dTotal = 0;
+kTotal = 0;
+
+dScores.forEach((num) => {
+  dTotal += num;
+});
+
+dAvg = dTotal / dScores.length;
+
+kScores.forEach((num) => {
+  kTotal += num;
+});
+
+kAvg = kTotal / kScores.length;
+
+console.log(`${dAvg} - ${kAvg}`);
+if (dTotal > kTotal && dTotal > 100) {
+  console.log(`Dolphins Win`);
+} else if (kTotal > dTotal && kTotal > 100) {
+  console.log(`Koalas Win`);
+} else if ((dTotal = kTotal && dTotal > 100 && kTotal > 100)) {
+  console.log(`it's a tie`);
+}
+
+dScores = [97, 112, 101];
+kScores = [109, 95, 106];
+dTotal = 0;
+kTotal = 0;
+
+dScores.forEach((num) => {
+  dTotal += num;
+});
+
+dAvg = dTotal / dScores.length;
+
+kScores.forEach((num) => {
+  kTotal += num;
+});
+
+kAvg = kTotal / kScores.length;
+
+console.log(`${dAvg} - ${kAvg}`);
+if (dTotal > kTotal && dTotal > 100) {
+  console.log(`Dolphins Win`);
+} else if (kTotal > dTotal && kTotal > 100) {
+  console.log(`Koalas Win`);
+} else if ((dTotal = kTotal && dTotal > 100 && kTotal > 100)) {
+  console.log(`it's a tie`);
+}
