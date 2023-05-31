@@ -1,11 +1,13 @@
 'use strict';
 
-// check is Integer
-// reset cell on focus
-// keep track of guessed number
-//
+// TODO check if guess is Integer
+// TODO keep track of guessed number
+
 const min = 1;
 const max = 20;
+const backgroundColorWin = '#239753';
+const backgroundColorStart = '#000';
+const availableGuesses = [...Array(max + 1).keys()].slice(1);
 let highScore = 20;
 let score = 20;
 let secretNumber;
@@ -21,7 +23,8 @@ function startGame() {
   gameOver = false;
   score = 20;
   secretNumber = getRandomInt(min, max);
-  setBackgoundColor('000000');
+  setBackgoundColor(backgroundColorStart);
+  document.querySelector('.youWin').style.visibility = 'hidden';
   document.querySelector('.guess').textContent = '';
   document.querySelector('.number').textContent = '??';
   document.querySelector('.score').textContent = score;
@@ -38,17 +41,15 @@ function guessCorrect() {
   checkHighScore();
   document.querySelector('.number').textContent = secretNumber;
   document.querySelector('.message').textContent = '🎉 Correct Number';
-  setBackgoundColor('CD8000');
+  document.querySelector('.youWin').style.visibility = 'visible';
+  setBackgoundColor(backgroundColorWin);
 }
 
-function guessToHigh() {
+function guessWrong(guessWrongMessage) {
   decrementScore();
-  document.querySelector('.message').textContent = '😞 To High, Guess Again!';
-}
-
-function guessToLow() {
-  decrementScore();
-  document.querySelector('.message').textContent = '😞 To Low, Guess Again!';
+  document.querySelector(
+    '.message'
+  ).textContent = `😞 ${guessWrongMessage}, Guess Again!`;
 }
 
 function decrementScore() {
@@ -64,12 +65,16 @@ function checkHighScore() {
 }
 
 function setBackgoundColor(bgColor) {
-  document.querySelector('body').style.backgroundColor = `#${bgColor}`;
+  document.querySelector('body').style.backgroundColor = bgColor;
 }
 
 // eventlistner Play Again Reset GAme
 document.querySelector('.again').addEventListener('click', function () {
   startGame();
+});
+
+document.querySelector('.guess').addEventListener('focus', function () {
+  document.querySelector('.guess').value = '';
 });
 
 // eventlistner Check the guess
@@ -82,10 +87,9 @@ document.querySelector('.check').addEventListener('click', function () {
     guessBlank();
   } else if (guess === secretNumber) {
     guessCorrect();
-  } else if (guess > secretNumber) {
-    guessToHigh();
-  } else if (guess < secretNumber) {
-    guessToLow();
+  } else if (guess != secretNumber) {
+    let guessWrongMessage = guess > secretNumber ? 'To High' : 'To Low';
+    guessWrong(guessWrongMessage);
   }
 });
 
