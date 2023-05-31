@@ -8,6 +8,17 @@ const max = 20;
 const backgroundColorWin = '#239753';
 const backgroundColorStart = '#000';
 const availableGuesses = [...Array(max + 1).keys()].slice(1);
+
+const qsBody = document.querySelector('body');
+const qsGuess = document.querySelector('.guess');
+const qsNumber = document.querySelector('.number');
+const qsYouWin = document.querySelector('.youWin');
+const qsScore = document.querySelector('.score');
+const qsHighScore = document.querySelector('.highscore');
+const qsMessage = document.querySelector('.message');
+const qsAgain = document.querySelector('.again');
+const qsCheck = document.querySelector('.check');
+
 let highScore = 20;
 let score = 20;
 let secretNumber;
@@ -24,65 +35,63 @@ function startGame() {
   score = 20;
   secretNumber = getRandomInt(min, max);
   setBackgoundColor(backgroundColorStart);
-  document.querySelector('.youWin').style.visibility = 'hidden';
-  document.querySelector('.guess').textContent = '';
-  document.querySelector('.number').textContent = '??';
-  document.querySelector('.score').textContent = score;
-  document.querySelector('.highscore').textContent = highScore;
+  qsYouWin.style.visibility = 'hidden';
+  qsGuess.textContent = '';
+  qsNumber.textContent = '??';
+  qsScore.textContent = score;
+  qsHighScore.textContent = highScore;
 }
 
 function guessBlank() {
-  document.querySelector('.message').textContent = '⛔ Enter number to guess!';
+  qsMessage.textContent = '⛔ Enter number to guess!';
 }
 
 function guessCorrect() {
   decrementScore();
-  gameOver = true;
   checkHighScore();
-  document.querySelector('.number').textContent = secretNumber;
-  document.querySelector('.message').textContent = '🎉 Correct Number';
-  document.querySelector('.youWin').style.visibility = 'visible';
   setBackgoundColor(backgroundColorWin);
+  gameOver = true;
+  qsNumber.textContent = secretNumber;
+  qsMessage.textContent = '🎉 Correct Number';
+  qsYouWin.style.visibility = 'visible';
 }
 
 function guessWrong(guessWrongMessage) {
   decrementScore();
-  document.querySelector(
-    '.message'
-  ).textContent = `😞 ${guessWrongMessage}, Guess Again!`;
+  qsMessage.textContent = `😞 ${guessWrongMessage}, Guess Again!`;
 }
 
 function decrementScore() {
   score--;
-  document.querySelector('.score').textContent = score;
+  qsScore.textContent = score;
 }
 
 function checkHighScore() {
   if (score > highScore || highScore === 20) {
     highScore = score;
-    document.querySelector('.highscore').textContent = highScore;
+    qsHighScore.textContent = highScore;
   }
 }
 
 function setBackgoundColor(bgColor) {
-  document.querySelector('body').style.backgroundColor = bgColor;
+  qsBody.style.backgroundColor = bgColor;
 }
 
 // eventlistner Play Again Reset GAme
-document.querySelector('.again').addEventListener('click', function () {
+qsAgain.addEventListener('click', function () {
   startGame();
 });
 
-document.querySelector('.guess').addEventListener('focus', function () {
-  document.querySelector('.guess').value = '';
+qsGuess.addEventListener('focus', function () {
+  qsGuess.value = '';
 });
 
 // eventlistner Check the guess
-document.querySelector('.check').addEventListener('click', function () {
+qsCheck.addEventListener('click', function () {
   if (gameOver) {
     return;
   }
-  const guess = Number(document.querySelector('.guess').value);
+  const guess = Number(qsGuess.value);
   if (!guess) {
     guessBlank();
   } else if (guess === secretNumber) {
